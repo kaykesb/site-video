@@ -27,3 +27,28 @@ export class UserSchema extends BaseModel {
   @column()
   declare username: string | null
 }
+
+export class VideoSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'duration', 'id', 'thumbnailPath', 'title', 'updatedAt', 'userId', 'videoPath', 'viewsCount'] as const
+  $columns = VideoSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
+  @column()
+  declare duration: number | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare thumbnailPath: string | null
+  @column()
+  declare title: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number | null
+  @column()
+  declare videoPath: string
+  @column()
+  declare viewsCount: number
+}

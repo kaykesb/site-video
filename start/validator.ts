@@ -40,5 +40,6 @@ vine.messagesProvider = new SimpleMessagesProvider(
     password: 'senha',
     passwordConfirmation: 'confirmação de senha',
     username: 'nome de usuário',
+    title: 'título'
   }
 )

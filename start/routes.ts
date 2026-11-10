@@ -18,9 +18,8 @@ router
   .group(() => {
     router.on('/dashboard').render('pages/dashboard').as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
+
+    router.get('/videos/enviar', [controllers.Videos, 'create'])
+    router.post('/videos', [controllers.Videos, 'store'])
   })
   .use(middleware.auth())
-
-router.get('/videos', async () => {
-  return 'aqui vai ficar a lista de videos'
-})
