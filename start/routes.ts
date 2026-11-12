@@ -21,5 +21,7 @@ router
 
     router.get('/videos/enviar', [controllers.Videos, 'create'])
     router.post('/videos', [controllers.Videos, 'store'])
+
+    router.get('/videos/:id', [controllers.Videos, 'show'])
   })
   .use(middleware.auth())

@@ -13,6 +13,7 @@ export type ScannedRoutes = {
     'session.destroy': { paramsTuple?: []; params?: {} }
     'videos.create': { paramsTuple?: []; params?: {} }
     'videos.store': { paramsTuple?: []; params?: {} }
+    'videos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   GET: {
     'home': { paramsTuple?: []; params?: {} }
@@ -20,6 +21,7 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'videos.create': { paramsTuple?: []; params?: {} }
+    'videos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
@@ -27,6 +29,7 @@ export type ScannedRoutes = {
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'videos.create': { paramsTuple?: []; params?: {} }
+    'videos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }

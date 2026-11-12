@@ -1,0 +1,80 @@
+@layouts.app({ title: `${video.title} | RuralStream` })
+  @page()
+    <div class="video-page">
+      <div class="video-page__main">
+        {{-- Link para voltar --}}
+        <div>
+          <a class="video-page__back" href="{{ route('dashboard') }}">
+            ← Voltar para o início
+          </a>
+        </div>
+
+        {{-- Player de Vídeo --}}
+        <div class="video-page__player">
+          <video
+            src="{{ video.videoPath }}"
+            @if(video.thumbnailPath)
+              poster="{{ video.thumbnailPath }}"
+            @end
+            controls
+            class="video-page__media"
+          ></video>
+        </div>
+
+        {{-- Título e Detalhes do Vídeo --}}
+        <div class="video-details">
+          
+          <div>
+            <h1 class="video-details__title">
+              {{ video.title }}
+            </h1>
+
+            <div class="video-details__meta">
+              <span>
+                Por <strong class="video-details__author">{{ video.author.fullName || video.author.username }}</strong>
+              </span>
+              <span>•</span>
+              <span>{{ video.viewsCount }} visualizações</span>
+            </div>
+          </div>
+
+          <hr class="video-details__divider" />
+
+          {{-- Descrição --}}
+          <div class="video-details__description-block">
+            <h3 class="video-details__description-title">
+              Descrição
+            </h3>
+            <p class="video-details__description">
+              {{ video.description || 'Este vídeo não possui descrição.' }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <aside class="video-page__sidebar">
+        <h2 class="video-page__sidebar-title">Vídeos Recomendados</h2>
+        <article class="related-video">
+          <div class="related-video__thumbnail"></div>
+          <div class="related-video__info">
+            <h3>Como cuidar da horta no verão</h3>
+            <p>Canal Rural · 1,2 mil visualizações</p>
+          </div>
+        </article>
+        <article class="related-video">
+          <div class="related-video__thumbnail"></div>
+          <div class="related-video__info">
+            <h3>Como cuidar da horta no verão</h3>
+            <p>Canal Rural · 1,2 mil visualizações</p>
+          </div>
+        </article>
+        <article class="related-video">
+          <div class="related-video__thumbnail"></div>
+          <div class="related-video__info">
+            <h3>Como cuidar da horta no verão</h3>
+            <p>Canal Rural · 1,2 mil visualizações</p>
+          </div>
+        </article>
+      </aside>
+    </div>
+  @end
+@end

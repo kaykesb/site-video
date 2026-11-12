@@ -1011,6 +1011,146 @@ input {
   color: #e0685c;
 }
 
+.video-page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.video-page__main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.video-page__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.video-page__player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #000;
+  border-radius: 12px;
+}
+
+.video-page__media {
+  display: block;
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+}
+
+.video-page__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 30px;
+}
+
+.page:has(.video-page) {
+  max-width: 1600px;
+}
+
+.related-video {
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.related-video__thumbnail {
+  aspect-ratio: 16 / 9;
+  background: var(--line-2);
+  border-radius: var(--r);
+}
+
+.related-video__info h3 {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.related-video__info p {
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.video-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 0 0;
+}
+
+.video-details__title {
+  margin-bottom: 8px;
+  color: var(--ink);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.video-details__meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.video-details__author {
+  color: var(--ink);
+}
+
+.video-details__divider {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.video-details__description-title {
+  margin: 0 0 8px;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.video-details__description-block {
+  padding: 12px;
+  background: color-mix(in oklab, var(--ink) 4%, var(--paper));
+  border-radius: var(--r-lg);
+}
+
+.video-details__description {
+  margin: 0;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 0.5;
+  white-space: pre-line;
+  margin-bottom: 8px;
+}
+
+.video-page__sidebar-title {
+  margin-bottom: 2px;
+  color: var(--ink);
+  font-size: 18px;
+  font-weight: 600;
+}
+
 /* ==========================================================================
    Responsive
    ========================================================================== */

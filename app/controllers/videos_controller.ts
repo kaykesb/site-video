@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import { createVideoValidator } from '#validators/video'
 import app from '@adonisjs/core/services/app'
 import { randomUUID } from 'node:crypto'
+import Video from '#models/video'
 
 
 export default class VideosController {
@@ -30,5 +31,15 @@ export default class VideosController {
         })
 
         return response.redirect().toRoute('dashboard')
+    }
+
+    async show({ params, view }: HttpContext) {
+        const video = await Video.findOrFail(params.id)
+        await video.load('author')
+
+        video.viewsCount = (video.viewsCount ?? 0) + 1
+        await video.save()
+
+        return view.render('pages/videos/show', { video })
     }
 }
