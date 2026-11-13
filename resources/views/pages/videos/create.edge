@@ -1,87 +1,41 @@
-@layouts.app({ title: 'Enviar vídeo | RuralStream' })
-  @page()
-    <h1>Enviar novo vídeo</h1>
+@layouts.app({ title: 'Enviar vídeo' })
+  <section class="mx-auto max-w-6xl px-5 py-8 md:px-8">
+    <p class="text-xs font-bold uppercase tracking-wider text-brand">Compartilhe com a comunidade</p>
+    <h1 class="mt-1 text-3xl font-bold tracking-tight text-texto-forte">Enviar vídeo</h1>
+    <p class="mt-2 text-sm text-rural-400">Publique um vídeo curto para outras pessoas assistirem.</p>
 
-    <div style="max-width: 680px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 24px; margin-top: 20px;">
-      @form({
-        action: '/videos',
-        method: 'POST',
-        enctype: 'multipart/form-data',
-        style: 'display: flex; flex-direction: column; gap: 25px;'
-      })
+    @form({ action: '/videos', method: 'POST', enctype: 'multipart/form-data', class: 'mt-8 grid gap-8 md:grid-cols-[280px_minmax(0,1fr)]' })
+      <section>
+        @field.root({ name: 'video' })
+        <div x-data="{ videoUrl: null }">
+        <label for="video_input" class="flex aspect-[9/16] cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-rural-700 bg-rural-900 p-6 text-center hover:border-brand">
+          <template x-if="!videoUrl"><span class="flex flex-col items-center gap-3">{{ svg('lucide:upload-cloud', { width: 42, height: 42 }) }}<span class="font-bold">Selecionar vídeo</span><span class="text-xs text-rural-400">MP4, WebM, MOV ou MKV</span></span></template>
+          <video x-show="videoUrl" x-bind:src="videoUrl" controls class="max-h-full max-w-full rounded-lg"></video>
+        </label>
+        <input id="video_input" name="video" type="file" accept="video/mp4,video/webm,video/quicktime,video/x-matroska" required class="sr-only" x-on:change="videoUrl = URL.createObjectURL($event.target.files[0])" />
+        </div>
+        @!field.error()
+        @end
+      </section>
+      <section class="flex flex-col gap-5">
         @field.root({ name: 'title' })
           @!field.label({ text: 'Título' })
-          @!input.control({ placeholder: 'Digite o título do vídeo aqui' })
+          @!input.control({ placeholder: 'Dê um título ao seu vídeo' })
           @!field.error()
         @end
-
         @field.root({ name: 'description' })
           @!field.label({ text: 'Descrição' })
-          @!textarea.control({ 
-            placeholder: 'Digite a descrição do seu vídeo aqui',
-            class: 'field__input',
-            rows: 4,
-            style: 'height: auto; min-height: 100px; padding: 10px 12px;'
-          })
+          @!textarea.control({ placeholder: 'Conte sobre o vídeo', class: 'field__input', rows: 5, style: 'height: auto; padding: 12px;' })
           @!field.error()
         @end
-
-        @field.root({ name: 'video' })
-          @!field.label({ text: 'Arquivo de vídeo' })
-
-          <div
-            x-data="{ videoUrl: null }"
-            style="border: 2px dashed var(--line-2); border-radius: 12px; padding: 24px; text-align: center; background: var(--paper); cursor: pointer;"
-          >
-            {{-- caixa de upload --}}
-            <label
-              for="video_input"
-              x-show="!videoUrl"
-              style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px;"
-            >
-              @svg('lucide:upload-cloud', { width: 36, height: 36, style: 'color: var(--muted);' })
-              <span style="font-weight: 500; font-size: 14px;">Clique para selecionar o vídeo</span>
-            </label>
-
-            {{-- player de preview --}}
-            <div x-show="videoUrl" style="display: flex; flex-direction: row; align-items: flex-end; justify-content: space-between; width: 100%;">
-              <video x-bind:src="videoUrl" controls style="max-width: 100%; max-height: 240px; border-radius: 8px;"></video>
-              <button
-                type="button"
-                x-on:click="videoUrl = null; $refs.videoFile.value = ''"
-                class="btn btn--secondary btn--sm"
-                style="margin-left: auto;"
-              >
-                Trocar vídeo
-              </button>
-            </div>
-
-            {{-- input --}}
-            <input
-              id="video_input"
-              x-ref="videoFile"
-              type="file"
-              name="video"
-              accept="video/*"
-              style="display: none;"
-              x-on:change="videoUrl = URL.createObjectURL($event.target.files[0])"
-            />
-          </div>
-
-          @!field.error()
-        @end
-
         @field.root({ name: 'thumbnail' })
-          @!field.label({ text: 'Imagem de capa (Thumbnail)' })
-          @!input.control({ type: 'file', accept: 'image/*' })
+          @!field.label({ text: 'Imagem de capa (opcional)' })
+          @!input.control({ type: 'file', accept: 'image/jpeg,image/png,image/webp' })
           @!field.error()
         @end
-
-        @!button({
-          text: 'Publicar vídeo',
-          type: 'submit',
-        })
-      @end
-    </div>
-  @end
+        <div class="rounded-xl border border-rural-800 p-4 text-sm text-rural-400"><p class="font-bold text-rural-200">Dica</p><p class="mt-1">Use um título claro e uma boa imagem de capa para apresentar seu vídeo.</p></div>
+        <button type="submit" class="mt-2 h-11 rounded-lg bg-brand px-6 text-sm font-bold text-white hover:bg-brand-hover">Publicar vídeo</button>
+      </section>
+    @end
+  </section>
 @end

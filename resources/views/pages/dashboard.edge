@@ -1,17 +1,43 @@
-@layouts.app({ title: 'Dashboard' })
-  @page()
-    <div class="empty">
-      <div class="empty__mark">
-        @svg('lucide:layout-grid', { width: 22, height: 22 })
-      </div>
-      <h1>Your dashboard is ready</h1>
-      <p>
-        It's empty on purpose. A clean starting point with nothing to undo. Add your first route and component to begin.
-      </p>
-      <p class="mono" style="font-size: 12.5px; color: var(--subtle); margin-top: 4px;">
-        Start in
-        <span class="kbd">resources/views/pages/dashboard.edge</span>
-      </p>
+@layouts.app({ title: 'Início' })
+  <header class="sticky top-0 z-20 border-b border-rural-800 bg-rural-950/90 px-5 py-4 backdrop-blur md:px-8">
+    <div class="mx-auto flex max-w-7xl items-center gap-4">
+      <form action="/buscar" class="flex-1">
+        <label class="sr-only" for="home-search">Buscar vídeos e pessoas</label>
+        <input id="home-search" name="q" placeholder="Buscar vídeos e pessoas" class="h-10 w-full rounded-full border border-rural-800 bg-rural-900 px-4 text-sm placeholder:text-rural-500 focus:outline-none focus:ring-2 focus:ring-brand" />
+      </form>
+      <a href="/videos/enviar" class="rounded-full bg-brand px-4 py-2.5 text-sm font-bold text-brand-contraste hover:bg-brand-hover">+ Enviar vídeo</a>
     </div>
-  @end
+    <div class="mx-auto mt-3 flex max-w-7xl gap-2 overflow-x-auto pb-1 text-sm">
+      @each(category in ['Todos', 'Agro', 'Programação', 'Bichos', 'Natureza', 'Receitas', 'Campus', 'Ciência', 'Música'])
+        <a href="#" class="shrink-0 rounded-full bg-rural-900 px-4 py-2 text-rural-300 hover:bg-rural-800">{{ category }}</a>
+      @end
+    </div>
+  </header>
+
+  <section class="mx-auto max-w-7xl px-5 py-6 md:px-8">
+    <div class="mb-5 flex items-center justify-between">
+      <h1 class="text-2xl font-bold tracking-tight text-texto-forte">Para você</h1>
+      <p class="text-sm text-rural-400">Vídeos recentes</p>
+    </div>
+    <div class="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+      @each(card in [
+        { title: 'Colheita do milho no campo experimental', author: '@carlinhos.dev', views: '300', color: 'from-pink-600 to-rose-950', id: 1 },
+        { title: 'Flexbox em 30 segundos', author: '@leti', views: '8,2 mil', color: 'from-sky-600 to-slate-950', id: 1 },
+        { title: 'Conheça as vacas do setor de bovinocultura', author: '@brunot', views: '16,1 mil', color: 'from-cyan-500 to-slate-950', id: 1 },
+        { title: 'Trilha da mata atlântica do campus', author: '@mari.costa', views: '24,1 mil', color: 'from-violet-700 to-slate-950', id: 1 },
+        { title: 'Um dia no hospital veterinário', author: '@lucasb', views: '32 mil', color: 'from-red-700 to-slate-950', id: 1 },
+        { title: 'O que é uma API REST?', author: '@jufer', views: '39,9 mil', color: 'from-amber-900 to-slate-950', id: 1 },
+      ])
+        <a href="/videos/{{ card.id }}" class="group block">
+          <div class="relative aspect-[9/16] overflow-hidden rounded-xl bg-gradient-to-b {{ card.color }}">
+            <span class="absolute inset-0 grid place-items-center text-white/50 transition group-hover:scale-110">{{ svg('lucide:play', { width: 42, height: 42 }) }}</span>
+            <span class="absolute bottom-3 left-3 flex items-center gap-1 text-xs text-white">{{ svg('lucide:eye', { width: 15, height: 15 }) }} {{ card.views }}</span>
+            <span class="absolute right-2 top-2 rounded bg-black/70 px-1.5 py-0.5 text-xs text-white">0:28</span>
+          </div>
+          <h2 class="mt-2 line-clamp-2 text-sm font-bold leading-snug text-rural-100">{{ card.title }}</h2>
+          <p class="mt-1 text-xs text-rural-400">{{ card.author }} · há 4 dias</p>
+        </a>
+      @end
+    </div>
+  </section>
 @end

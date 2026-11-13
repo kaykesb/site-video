@@ -17,11 +17,19 @@ router
 router
   .group(() => {
     router.on('/dashboard').render('pages/dashboard').as('dashboard')
+    router.on('/buscar').render('pages/search').as('search')
+    router.on('/perfil').render('pages/profile').as('profile')
+    router.on('/perfil/editar').render('pages/profile_edit').as('profile.edit')
     router.post('logout', [controllers.Session, 'destroy'])
 
     router.get('/videos/enviar', [controllers.Videos, 'create'])
     router.post('/videos', [controllers.Videos, 'store'])
 
     router.get('/videos/:id', [controllers.Videos, 'show'])
+
+    router.on('admin/videos').render('pages/admin/videos').use(middleware.admin())
+    router.on('admin/usuarios').render('pages/admin/users').use(middleware.admin()).as('admin.users.index')
+    router.on('admin/usuarios/:id').render('pages/admin/user_show').use(middleware.admin()).as('admin.users.show')
   })
   .use(middleware.auth())
+

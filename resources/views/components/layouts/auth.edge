@@ -1,31 +1,48 @@
+@let(centered = $props.get('centered', false))
+@let(centeredWidth = $props.get('wide', false) ? 'max-w-lg' : 'max-w-sm')
+@let(backgroundClass = $props.get('softBackground', false) ? 'bg-rural-900' : 'bg-rural-950')
+@let(pageTitle = $props.get('title', 'RuralStream · Acesse sua conta'))
 <!DOCTYPE html>
-<html
-  lang="en-us"
-  data-theme="{{
-    request.plainCookie('app_theme', {
-      defaultValue: 'light',
-      encoded: false,
-    })
-  }}"
->
+<html lang="pt-BR" data-theme="{{ request.plainCookie('app_theme', { defaultValue: 'light', encoded: false }) }}">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Criar conta | RuralStream</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+    <title>{{ pageTitle }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('dumper')
   </head>
-  <body>
-    <div style="position: fixed; top: 20px; right: 20px;">
-     @!themeToggle()
-     </div>
-     <div class="auth">
-        <div class="auth__form-col">
-         @!logo({ size: 28 })
-          <div class="auth__form-wrap">{{{ await $slots.main() }}}</div>
-          <div style="height: 20px;"></div>
+  <body class="min-h-screen {{ backgroundClass }} font-sans text-rural-100 antialiased">
+    @if(centered)
+      <main class="relative grid min-h-screen place-items-center px-5 py-12">
+        @if(!$props.get('hideThemeToggle', false))
+          <div class="absolute right-5 top-5">
+            @!themeToggle()
+          </div>
+        @end
+        <div class="w-full {{ centeredWidth }} rounded-2xl border border-rural-800 bg-rural-950 p-8 shadow-sm">
+          <div class="mb-8">
+            @!logo()
+          </div>
+          {{{ await $slots.main() }}}
         </div>
+      </main>
+    @else
+      <div class="grid min-h-screen lg:grid-cols-2">
+        <section class="hidden flex-col justify-between bg-brand p-12 text-brand-contraste lg:flex">
+          <a href="/" class="inline-flex items-center gap-2 text-xl font-bold"><span class="grid h-9 w-9 place-items-center rounded-lg bg-white text-brand">{{ svg('lucide:play', { width: 18, height: 18 }) }}</span>RuralStream</a>
+          <div><p class="mb-4 text-xs font-bold uppercase tracking-[.2em] text-white/70">RuralStream</p><h1 class="max-w-lg text-5xl font-black leading-[1.05] tracking-tight">Vídeos curtos<br />de quem vive<br />a Rural.</h1><p class="mt-5 max-w-md text-lg text-white/75">Grave, envie e assista vídeos de até 60 segundos sobre o campus, as aulas e tudo que acontece por aqui.</p></div>
+          <p class="text-sm text-white/60">Disciplina de Programação para Web</p>
+        </section>
+        <main class="relative flex min-h-screen items-center justify-center px-5 py-12">
+          <div class="absolute right-5 top-5">
+            @!themeToggle()
+          </div>
+          <div class="w-full max-w-md">{{{ await $slots.main() }}}</div>
+        </main>
       </div>
-      @include('partials/flash_alerts')
+    @end
+    @include('partials/flash_alerts')
   </body>
 </html>

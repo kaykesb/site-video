@@ -1,12 +1,10 @@
-@let(size = $props.get('size', 26))
 @link({
   route: 'home',
   'aria-label': 'RuralStream',
-  style: 'display: inline-flex; color: var(--ink);',
+  class: 'inline-flex items-center gap-2 font-display text-xl font-bold tracking-tight text-texto-forte',
 })
- <span style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; background: #18181b; border-radius: 10px; color: #fff;">
-    <svg width="30" height="30" viewBox="0 0 24 24" style="margin-left: -3px;">
-      <path d="M8 5.14v13.72a1 1 0 0 0 1.5.86l11-6.86a1 1 0 0 0 0-1.72l-11-6.86a1 1 0 0 0-1.5.86z" fill="#ffffff" />
-    </svg>
+  <span class="logo-mark grid h-8 w-8 place-items-center rounded-lg bg-brand text-brand-contraste">
+    @svg('lucide:play', { width: 16, height: 16 })
   </span>
+  <span>Rural<span class="text-brand">Stream</span></span>
 @end

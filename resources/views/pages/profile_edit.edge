@@ -1,0 +1,17 @@
+@layouts.app({ title: 'Editar perfil' })
+  <section class="mx-auto max-w-5xl px-5 py-8 md:px-8">
+    <h1 class="text-3xl font-bold tracking-tight text-texto-forte">Editar perfil</h1>
+    <form class="mt-8 grid gap-8 md:grid-cols-[240px_minmax(0,1fr)]">
+      <div class="flex flex-col items-center gap-3 rounded-xl border border-rural-800 p-6">
+        <div class="grid h-28 w-28 place-items-center rounded-full bg-brand text-3xl font-bold text-brand-contraste">{{ auth.user.initials }}</div>
+        <button type="button" class="text-sm font-bold text-brand">Alterar foto</button>
+      </div>
+      <div class="flex flex-col gap-5">
+        <label class="flex flex-col gap-2 text-sm font-bold">Nome completo<input value="{{ auth.user.fullName }}" class="h-11 rounded-lg border border-rural-700 bg-rural-950 px-3 font-normal" /></label>
+        <label class="flex flex-col gap-2 text-sm font-bold">Nome de usuário<input value="{{ auth.user.username }}" class="h-11 rounded-lg border border-rural-700 bg-rural-950 px-3 font-normal" /></label>
+        <label class="flex flex-col gap-2 text-sm font-bold">Bio<textarea rows="3" placeholder="Conte um pouco sobre você" class="rounded-lg border border-rural-700 bg-rural-950 p-3 font-normal"></textarea></label>
+        <div class="flex gap-3"><button type="button" class="rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white">Salvar alterações</button><a href="/perfil" class="rounded-lg border border-rural-700 px-5 py-2.5 text-sm">Cancelar</a></div>
+      </div>
+    </form>
+  </section>
+@end

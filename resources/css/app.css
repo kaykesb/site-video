@@ -1,26 +1,56 @@
+@import 'tailwindcss';
+@source '../views/**/*.edge';
+
+@theme {
+  --font-sans: 'Lato', Calibri, sans-serif;
+  --font-display: 'Lato', Calibri, sans-serif;
+
+  --color-brand: #004388;
+  --color-brand-hover: #0072ab;
+  --color-brand-contraste: #ffffff;
+  --color-texto-forte: #0b1b33;
+
+  --color-azul: #004388;
+  --color-verde: #008244;
+  --color-amarelo: #ffcc00;
+
+  --color-rural-50: #0b1b33;
+  --color-rural-100: #14253f;
+  --color-rural-200: #2a3b55;
+  --color-rural-300: #45556e;
+  --color-rural-400: #5d6b80;
+  --color-rural-500: #7a8698;
+  --color-rural-600: #b4becc;
+  --color-rural-700: #d3dae4;
+  --color-rural-800: #e4e9f0;
+  --color-rural-900: #f3f5f9;
+  --color-rural-950: #ffffff;
+}
+
+@layer components {
 /* ==========================================================================
    AdonisJS Starter Kit
    Tokens are the only thing you need to touch to re-theme.
    ========================================================================== */
 
 :root {
-  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --sans: 'Lato', Calibri, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
   --serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
-  --paper: #f5f5f6;
+  --paper: #f3f5f9;
   --card: #ffffff;
-  --ink: #0a0a0b;
-  --ink-2: #2a2c30;
-  --muted: #6b6f76;
-  --subtle: #a4a8af;
-  --line: #ededee;
-  --line-2: #dddfe2;
-  --btn: #0a0a0b;
+  --ink: #14253f;
+  --ink-2: #2a3b55;
+  --muted: #5d6b80;
+  --subtle: #7a8698;
+  --line: #e4e9f0;
+  --line-2: #d3dae4;
+  --btn: #004388;
   --btn-fg: #ffffff;
-  --ring: rgba(10, 10, 11, 0.13);
+  --ring: rgba(0, 67, 136, 0.2);
   --field: #ffffff;
-  --ok: #18794e;
+  --ok: #008244;
 
   --r: 8px;
   --r-lg: 14px;
@@ -1190,4 +1220,30 @@ input {
   .panel {
     padding: 20px;
   }
+}
+
+.signup-form .field__input {
+  height: 44px;
+  width: 100%;
+  min-width: 0;
+  background: var(--paper);
+}
+
+.signup-form .field {
+  min-width: 0;
+}
+
+.signup-form .field__label {
+  font-weight: 600;
+}
+
+.logo-mark svg path {
+  fill: currentColor;
+}
+
+.signup-form .btn {
+  height: 48px;
+  font-size: 16px;
+  font-weight: 900;
+}
 }

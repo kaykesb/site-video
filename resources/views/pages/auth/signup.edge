@@ -1,65 +1,74 @@
-@layouts.auth()
-  <h1 class="auth__title">Crie sua conta</h1>
-  @form({
-    route: 'new_account.store',
-    method: 'POST',
-    class: 'auth__form',
-    'x-data': '{ submitting: false }',
-    'x-on:submit': 'submitting = true',
-  })
+@layouts.auth({ centered: true, wide: true, softBackground: true, hideThemeToggle: true, title: 'Criar conta | RuralStream' })
+  <h1 class="text-3xl font-bold tracking-tight text-texto-forte">Criar conta</h1>
+  <p class="mt-1 text-sm text-rural-400">
+    Já tem conta?
+    @link({ route: 'session.create', class: 'font-bold text-brand hover:underline' })
+      Entrar
+    @end
+  </p>
+  @form({ route: 'new_account.store', method: 'POST', class: 'signup-form mt-8 flex flex-col gap-4', 'x-data': '{ submitting: false }', 'x-on:submit': 'submitting = true' })
     @field.root({ name: 'fullName' })
       @!field.label({ text: 'Nome completo' })
-      @!input.control({ autocomplete: 'name', placeholder: 'Seu nome completo' })
-      @!field.error()
-    @end
-    @field.root({ name: 'email' })
-      @!field.label({ text: 'E-mail' })
-      @!input.control({
-        type: 'email',
-        autocomplete: 'email',
-        placeholder: 'voce@exemplo.com',
-      })
+      @!input.control({ autocomplete: 'name' })
       @!field.error()
     @end
     @field.root({ name: 'username' })
       @!field.label({ text: 'Nome de usuário' })
-      @!input.control({ placeholder: 'seu_usuario' })
+      <div class="relative">
+        <span class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm text-rural-400">@</span>
+        @!input.control({ autocomplete: 'username', class: 'pl-7' })
+      </div>
       @!field.error()
     @end
-    @field.root({ name: 'password' })
-      @!field.label({ text: 'Senha' })
-      @!input.control({
-        type: 'password',
-        autocomplete: 'new-password',
-        placeholder: '••••••••',
-      })
+    @field.root({ name: 'email' })
+      @!field.label({ text: 'E-mail' })
+      @!input.control({ type: 'email', autocomplete: 'email', placeholder: 'seu@email.com' })
       @!field.error()
     @end
-    @field.root({ name: 'passwordConfirmation' })
-      @!field.label({ text: 'Confirmar senha' })
-      @!input.control({
-        type: 'password',
-        autocomplete: 'new-password',
-        placeholder: '••••••••',
-      })
-      @!field.error()
-    @end
-    @!button({
-      text: 'Criar conta',
-      type: 'submit',
-      block: true,
-      style: 'margin-top: 4px;',
-      'x-bind:disabled': 'submitting',
-      'x-text': "submitting ? 'Aguarde...' : 'Criar conta'",
-    })
+    <div class="grid grid-cols-2 gap-4">
+      @field.root({ name: 'password' })
+        @!field.label({ text: 'Senha' })
+        <div class="relative" x-data="{ visible: false }">
+          @!input.control({
+            type: 'password',
+            autocomplete: 'new-password',
+            class: 'pr-12',
+            'x-bind:type': "visible ? 'text' : 'password'",
+          })
+          <button
+            type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-rural-400 hover:text-rural-100"
+            x-on:click="visible = !visible"
+            x-bind:aria-label="visible ? 'Ocultar senha' : 'Mostrar senha'"
+          >
+            <span x-show="!visible">{{ svg('lucide:eye', { width: 18, height: 18 }) }}</span>
+            <span x-show="visible" x-cloak>{{ svg('lucide:eye-off', { width: 18, height: 18 }) }}</span>
+          </button>
+        </div>
+        @!field.error()
+      @end
+      @field.root({ name: 'passwordConfirmation' })
+        @!field.label({ text: 'Confirmar senha' })
+        <div class="relative" x-data="{ visible: false }">
+          @!input.control({
+            type: 'password',
+            autocomplete: 'new-password',
+            class: 'pr-12',
+            'x-bind:type': "visible ? 'text' : 'password'",
+          })
+          <button
+            type="button"
+            class="absolute right-3 top-1/2 -translate-y-1/2 text-rural-400 hover:text-rural-100"
+            x-on:click="visible = !visible"
+            x-bind:aria-label="visible ? 'Ocultar confirmação de senha' : 'Mostrar confirmação de senha'"
+          >
+            <span x-show="!visible">{{ svg('lucide:eye', { width: 18, height: 18 }) }}</span>
+            <span x-show="visible" x-cloak>{{ svg('lucide:eye-off', { width: 18, height: 18 }) }}</span>
+          </button>
+        </div>
+        @!field.error()
+      @end
+    </div>
+    @!button({ text: 'Criar conta', type: 'submit', block: true, style: 'margin-top: 8px;', 'x-bind:disabled': 'submitting', 'x-text': "submitting ? 'Aguarde...' : 'Criar conta'" })
   @end
-
-  <p class="auth__foot">
-    
-    Já possui uma conta?
-
-    @link({ route: 'session.create', class: 'il' })
-      Entrar
-    @end
-  </p>
 @end

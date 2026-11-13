@@ -42,4 +42,12 @@ export default class VideosController {
 
         return view.render('pages/videos/show', { video })
     }
+
+    async index({ view }: HttpContext) {
+        const videos = await Video.query()
+          .preload('author')
+          .orderBy('created_at', 'desc')
+
+        return view.render('pages/admin/videos', { videos })
+    }
 }

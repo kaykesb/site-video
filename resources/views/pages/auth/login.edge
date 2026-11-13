@@ -1,49 +1,27 @@
-@layouts.auth()
-  <h1 class="auth__title">Welcome back</h1>
-  <p class="auth__sub">Sign in to continue building.</p>
-  @form({
-    route: 'session.store',
-    method: 'POST',
-    class: 'auth__form',
-    'x-data': '{ submitting: false }',
-    'x-on:submit': 'submitting = true',
-  })
+@layouts.auth({ centered: true })
+  <div class="mb-8 lg:hidden">
+    @!logo()
+  </div>
+  <p class="text-xs font-bold uppercase tracking-wider text-brand">Boas-vindas de volta</p>
+  <h1 class="mt-2 text-3xl font-bold tracking-tight text-texto-forte">Entrar</h1>
+  <p class="mt-2 text-sm text-rural-400">Acesse sua conta para continuar.</p>
+  @form({ route: 'session.store', method: 'POST', class: 'mt-8 flex flex-col gap-4', 'x-data': '{ submitting: false }', 'x-on:submit': 'submitting = true' })
     @field.root({ name: 'email' })
-      @!field.label({ text: 'Email' })
-      @!input.control({
-        type: 'email',
-        autocomplete: 'username',
-        placeholder: 'you@example.com',
-      })
+      @!field.label({ text: 'E-mail' })
+      @!input.control({ type: 'email', autocomplete: 'username', placeholder: 'voce@exemplo.com' })
       @!field.error()
     @end
     @field.root({ name: 'password' })
-      @!field.label({ text: 'Password' })
-      @!input.control({
-        type: 'password',
-        autocomplete: 'current-password',
-        placeholder: '••••••••',
-      })
+      @!field.label({ text: 'Senha' })
+      @!input.control({ type: 'password', autocomplete: 'current-password', placeholder: 'Sua senha' })
       @!field.error()
     @end
-    @!button({
-      text: 'Sign in',
-      type: 'submit',
-      block: true,
-      style: 'margin-top: 4px;',
-      'x-bind:disabled': 'submitting',
-      'x-text': "submitting ? 'One moment…' : 'Sign in'",
-    })
+    @!button({ text: 'Entrar', type: 'submit', block: true, style: 'margin-top: 8px;', 'x-bind:disabled': 'submitting', 'x-text': "submitting ? 'Aguarde...' : 'Entrar'" })
   @end
-
-  <p class="auth__foot">
-    
-
-    New here?
-
-
-    @link({ route: 'new_account.create', class: 'il' })
-      Create an account
+  <p class="mt-6 text-center text-sm text-rural-400">
+    Ainda não tem uma conta?
+    @link({ route: 'new_account.create', class: 'font-bold text-brand hover:underline' })
+      Criar conta
     @end
   </p>
 @end

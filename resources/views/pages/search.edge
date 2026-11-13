@@ -1,0 +1,35 @@
+@layouts.app({ title: 'Buscar' })
+  <section class="mx-auto max-w-6xl px-5 py-8 md:px-8">
+    <h1 class="text-3xl font-bold tracking-tight text-texto-forte">Buscar</h1>
+    <form action="/buscar" class="mt-6 flex flex-col gap-3 sm:flex-row">
+      <label class="sr-only" for="search-query">Buscar vídeos ou pessoas</label>
+      <input id="search-query" name="q" placeholder="Título do vídeo ou nome de usuário" class="h-11 flex-1 rounded-lg border border-rural-800 bg-rural-900 px-4 text-sm placeholder:text-rural-500 focus:outline-none focus:ring-2 focus:ring-brand" />
+      <button class="h-11 rounded-lg bg-brand px-6 text-sm font-bold text-brand-contraste hover:bg-brand-hover">Buscar</button>
+    </form>
+    <section class="mt-10">
+      <h2 class="text-sm font-bold uppercase tracking-wider text-rural-400">Pessoas</h2>
+      <div class="mt-4 flex gap-3 overflow-x-auto pb-2">
+        @each(person in [{name:'Ana Beatriz',handle:'@anabia',initials:'AB'},{name:'Carlos Lima',handle:'@carlinhos.dev',initials:'CL'},{name:'Juliana Ferreira',handle:'@jufer',initials:'JF'}])
+          <a href="/perfil" class="flex min-w-56 items-center gap-3 rounded-xl border border-rural-800 p-3 hover:bg-rural-900"><span class="grid h-11 w-11 place-items-center rounded-full bg-brand font-bold text-white">{{ person.initials }}</span><span><span class="block text-sm font-bold">{{ person.name }}</span><span class="text-xs text-rural-400">{{ person.handle }}</span></span></a>
+        @end
+      </div>
+    </section>
+    <div class="mt-10">
+      <h2 class="text-sm font-bold uppercase tracking-wider text-rural-400">Vídeos</h2>
+      <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+        @each(card in [
+          { title: 'Colheita no campo experimental', author: '@carlinhos.dev', color: 'from-pink-600 to-rose-950' },
+          { title: 'Flexbox em 30 segundos', author: '@leti', color: 'from-sky-600 to-slate-950' },
+          { title: 'Trilha da mata atlântica', author: '@mari.costa', color: 'from-violet-700 to-slate-950' },
+          { title: 'O que é uma API REST?', author: '@jufer', color: 'from-amber-900 to-slate-950' },
+        ])
+          <a href="/videos/1" class="block">
+            <div class="grid aspect-[9/16] place-items-center rounded-xl bg-gradient-to-b {{ card.color }} text-white/60">{{ svg('lucide:play', { width: 36, height: 36 }) }}</div>
+            <h3 class="mt-2 line-clamp-2 text-sm font-bold">{{ card.title }}</h3>
+            <p class="mt-1 text-xs text-rural-400">{{ card.author }}</p>
+          </a>
+        @end
+      </div>
+    </div>
+  </section>
+@end
