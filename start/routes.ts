@@ -28,7 +28,7 @@ router
     router.get('/videos/:id', [controllers.Videos, 'show'])
 
     router.get('admin/videos', [controllers.Videos, 'index']).use(middleware.admin()).as('admin.videos.index')
-    router.on('admin/usuarios').render('pages/admin/users').use(middleware.admin()).as('admin.users.index')
+    router.get('admin/usuarios', [controllers.Users, 'index']).use(middleware.admin()).as('admin.users.index')
     router.on('admin/usuarios/:id').render('pages/admin/user_show').use(middleware.admin()).as('admin.users.show')
   })
   .use(middleware.auth())

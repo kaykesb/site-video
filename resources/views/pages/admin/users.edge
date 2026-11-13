@@ -1,11 +1,23 @@
 @layouts.app({ title: 'Usuários · Administração' })
   <section class="mx-auto max-w-6xl px-5 py-8 md:px-8">
     <p class="text-xs font-bold uppercase tracking-wider text-brand">Administração</p>
-    <header class="mt-1 flex flex-wrap items-end justify-between gap-4"><h1 class="text-3xl font-bold tracking-tight text-texto-forte">Usuários</h1><p class="text-sm text-rural-400">12 contas · 1 administrador</p></header>
-    <div class="mt-6 flex flex-col gap-3 sm:flex-row"><input placeholder="Buscar por nome, @usuário ou e-mail" class="h-10 flex-1 rounded-lg border border-rural-800 bg-rural-900 px-3 text-sm placeholder:text-rural-500" /><select class="h-10 rounded-lg border border-rural-800 bg-rural-900 px-3 text-sm"><option>Todos os papéis</option><option>Administrador</option><option>Usuário</option></select></div>
+    <header class="mt-1 flex flex-wrap items-end justify-between gap-4"><h1 class="text-3xl font-bold tracking-tight text-texto-forte">Usuários</h1><p class="text-sm text-rural-400">{{ users.length }} {{ users.length === 1 ? 'conta' : 'contas' }} · {{ adminCount }} {{ adminCount === 1 ? 'administrador' : 'administradores' }}</p></header>
+    <form action="/admin/usuarios" method="get" class="mt-6 flex flex-col gap-3 sm:flex-row"><input name="q" value="{{ query }}" placeholder="Buscar por nome, @usuário ou e-mail" class="h-10 flex-1 rounded-lg border border-rural-800 bg-rural-900 px-3 text-sm placeholder:text-rural-500" />
+      <button
+          type="submit"
+          class="h-10 rounded-lg bg-brand px-5 text-sm font-bold text-white hover:bg-brand-hover"
+        >
+          Buscar
+        </button>
+      <select name="role" class="h-10 rounded-lg border border-rural-800 bg-rural-900 px-3 text-sm">
+        <option value="all" {{ role === 'all' ? 'selected': ''}}>Todos os papéis</option>
+        <option value="admin" {{ role === 'admin' ? 'selected': ''}}>Administrador</option>
+        <option value="user" {{ role === 'user' ? 'selected': ''}}>Usuário</option>
+      </select>
+    </form>
     <div class="mt-4 overflow-x-auto rounded-xl border border-rural-800"><table class="w-full min-w-[720px] text-left text-sm"><thead class="bg-rural-900 text-xs uppercase tracking-wider text-rural-400"><tr><th class="px-4 py-3">Usuário</th><th class="px-4 py-3">E-mail</th><th class="px-4 py-3">Papel</th><th class="px-4 py-3">Cadastro</th><th></th></tr></thead><tbody class="divide-y divide-rural-800">
-      @each(user in [{name:'Ana Beatriz Souza',handle:'anabia',email:'ana@rural.edu.br',role:'Admin',date:'12 nov 2026'},{name:'Carlos Henrique Lima',handle:'carlinhos.dev',email:'carlos@rural.edu.br',role:'Usuário',date:'08 nov 2026'},{name:'Juliana Ferreira',handle:'jufer',email:'juliana@rural.edu.br',role:'Usuário',date:'02 nov 2026'}])
-        <tr class="hover:bg-rural-900/70"><td class="px-4 py-3"><a href="/admin/usuarios/1" class="font-bold text-rural-100 hover:text-brand">{{ user.name }} <span class="block font-normal text-rural-400">{{ '@' + user.handle }}</span></a></td><td class="px-4 py-3 text-rural-300">{{ user.email }}</td><td class="px-4 py-3"><span class="rounded-full bg-rural-800 px-2.5 py-1 text-xs">{{ user.role }}</span></td><td class="px-4 py-3 text-rural-400">{{ user.date }}</td><td class="px-4 py-3 text-right"><a href="/admin/usuarios/1" class="font-bold text-brand">Ver</a></td></tr>
+      @each(user in users)
+        <tr class="hover:bg-rural-900/70"><td class="px-4 py-3"><a href="/admin/usuarios/{{ user.id }}" class="font-bold text-rural-100 hover:text-brand">{{ user.fullName }} <span class="block font-normal text-rural-400">{{ '@' + user.username }}</span></a></td><td class="px-4 py-3 text-rural-300">{{ user.email }}</td><td class="px-4 py-3"><span class="rounded-full bg-rural-800 px-2.5 py-1 text-xs">{{ user.isAdmin ? 'Administrador': 'Usuário' }}</span></td><td class="px-4 py-3 text-rural-400">{{ user.createdAt.toFormat('dd/LL/yyyy') }}</td><td class="px-4 py-3 text-right"><a href="/admin/usuarios/{{ user.id }}" class="font-bold text-brand">Ver</a></td></tr>
       @end
     </tbody></table></div>
   </section>
