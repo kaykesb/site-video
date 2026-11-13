@@ -17,6 +17,7 @@ export type ScannedRoutes = {
     'videos.create': { paramsTuple?: []; params?: {} }
     'videos.store': { paramsTuple?: []; params?: {} }
     'videos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.videos.index': { paramsTuple?: []; params?: {} }
     'admin.users.index': { paramsTuple?: []; params?: {} }
     'admin.users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
@@ -30,6 +31,7 @@ export type ScannedRoutes = {
     'profile.edit': { paramsTuple?: []; params?: {} }
     'videos.create': { paramsTuple?: []; params?: {} }
     'videos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.videos.index': { paramsTuple?: []; params?: {} }
     'admin.users.index': { paramsTuple?: []; params?: {} }
     'admin.users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }
@@ -43,6 +45,7 @@ export type ScannedRoutes = {
     'profile.edit': { paramsTuple?: []; params?: {} }
     'videos.create': { paramsTuple?: []; params?: {} }
     'videos.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'admin.videos.index': { paramsTuple?: []; params?: {} }
     'admin.users.index': { paramsTuple?: []; params?: {} }
     'admin.users.show': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
   }

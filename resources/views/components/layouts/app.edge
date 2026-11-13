@@ -38,12 +38,12 @@
       @if(auth.user?.isAdmin)
         <p class="mb-2 mt-8 px-3 text-xs font-bold uppercase tracking-wider text-rural-500">Administração</p>
         <nav class="flex flex-col gap-1">
-          <a href="/admin/usuarios" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-rural-400 hover:bg-rural-900 hover:text-rural-100">
+          @navLink({ route: 'admin.users.index', class: 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-rural-400 hover:bg-rural-900 hover:text-rural-100 aria-[current=page]:bg-rural-800 aria-[current=page]:text-rural-100' })
             {{ svg('lucide:users-round', { width: 20, height: 20 }) }} Usuários
-          </a>
-          <a href="/admin/videos" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-rural-400 hover:bg-rural-900 hover:text-rural-100">
+          @end
+          @navLink({ route: 'admin.videos.index', class: 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-rural-400 hover:bg-rural-900 hover:text-rural-100 aria-[current=page]:bg-rural-800 aria-[current=page]:text-rural-100' })
             {{ svg('lucide:clapperboard', { width: 20, height: 20 }) }} Vídeos
-          </a>
+          @end
         </nav>
       @end
 

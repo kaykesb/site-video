@@ -12,7 +12,7 @@ export default class VideosController {
     }
 
     async store({ request, response, auth }: HttpContext) {
-        const { title, description, video, thumbnail } = await request.validateUsing(createVideoValidator)
+        const { title, description, video, thumbnail, duration } = await request.validateUsing(createVideoValidator)
         const videoFileName = `${randomUUID()}.${video.extname}`
         await video.move(app.makePath('public/uploads/videos'), { name: videoFileName })
 
@@ -26,6 +26,7 @@ export default class VideosController {
         await user.related('videos').create({
             title,
             description,
+            duration,
             videoPath: `/uploads/videos/${videoFileName}`,
             thumbnailPath: thumbnailFileName ? `/uploads/thumbnails/${thumbnailFileName}` : null,
         })
@@ -65,11 +66,25 @@ export default class VideosController {
         return view.render('pages/search', { videos, query, sort })
     }
 
-    async index({ view }: HttpContext) {
-        const videos = await Video.query()
+    async index({ request, view }: HttpContext) {
+        const query = request.input('q', '').trim().replace(/^@/, '')
+
+        const videosQuery = Video.query()
           .preload('author')
           .orderBy('created_at', 'desc')
 
-        return view.render('pages/admin/videos', { videos })
+        if(query) {
+            videosQuery.where((builder) => {
+              builder
+                .whereILike('title', `%${query}%`)
+                .orWhereHas('author', (authorQuery) => {
+                  authorQuery.whereILike('username', `%${query}%`)
+                })
+            })
+        }
+
+        const videos = await videosQuery
+
+        return view.render('pages/admin/videos', { videos, query })
     }
 }

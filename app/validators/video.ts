@@ -10,4 +10,5 @@ export const createVideoValidator = vine.create({
         size: '5mb',
         extnames: ['jpg', 'jpeg', 'png', 'webp'],
     }).optional(),
+    duration: vine.number().withoutDecimals().min(1),
 })
