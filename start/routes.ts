@@ -17,7 +17,7 @@ router
 router
   .group(() => {
     router.on('/dashboard').render('pages/dashboard').as('dashboard')
-    router.on('/buscar').render('pages/search').as('search')
+    router.get('/buscar', [controllers.Videos, 'search']).as('search')
     router.on('/perfil').render('pages/profile').as('profile')
     router.on('/perfil/editar').render('pages/profile_edit').as('profile.edit')
     router.post('logout', [controllers.Session, 'destroy'])

@@ -1,35 +1,66 @@
-@layouts.app({ title: 'Buscar' })
+@layouts.app({ title: 'Buscar vídeos' })
   <section class="mx-auto max-w-6xl px-5 py-8 md:px-8">
-    <h1 class="text-3xl font-bold tracking-tight text-texto-forte">Buscar</h1>
-    <form action="/buscar" class="mt-6 flex flex-col gap-3 sm:flex-row">
-      <label class="sr-only" for="search-query">Buscar vídeos ou pessoas</label>
-      <input id="search-query" name="q" placeholder="Título do vídeo ou nome de usuário" class="h-11 flex-1 rounded-lg border border-rural-800 bg-rural-900 px-4 text-sm placeholder:text-rural-500 focus:outline-none focus:ring-2 focus:ring-brand" />
-      <button class="h-11 rounded-lg bg-brand px-6 text-sm font-bold text-brand-contraste hover:bg-brand-hover">Buscar</button>
+    <form action="/buscar" method="get" class="flex flex-col gap-3 sm:flex-row">
+      <label class="sr-only" for="search-query">Buscar vídeos por título ou usuário</label>
+      <div class="relative min-w-0 flex-1">
+        <span class="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-rural-400">
+          {{ svg('lucide:search', { width: 18, height: 18 }) }}
+        </span>
+        <input
+          id="search-query"
+          type="search"
+          name="q"
+          value="{{ query }}"
+          placeholder="Buscar vídeos por título ou @usuário"
+          class="h-12 w-full rounded-xl border border-rural-800 bg-rural-900 pl-11 pr-4 text-sm placeholder:text-base placeholder:text-rural-500 focus:outline-none focus:ring-2 focus:ring-brand"
+        />
+      </div>
+      <button type="submit" class="h-12 rounded-xl bg-brand px-6 text-sm font-bold text-brand-contraste hover:bg-brand-hover">
+        Buscar
+      </button>
+      <label class="sr-only" for="search-sort">Ordenar resultados</label>
+      <select
+        id="search-sort"
+        name="sort"
+        onchange="this.form.requestSubmit()"
+        class="h-12 rounded-xl border border-rural-800 bg-rural-900 px-4 text-sm text-rural-200 focus:outline-none focus:ring-2 focus:ring-brand"
+      >
+        <option value="recent" {{ sort === 'recent' ? 'selected' : '' }}>Mais recentes</option>
+        <option value="views" {{ sort === 'views' ? 'selected' : '' }}>Mais visualizados</option>
+      </select>
     </form>
+
     <section class="mt-10">
-      <h2 class="text-sm font-bold uppercase tracking-wider text-rural-400">Pessoas</h2>
-      <div class="mt-4 flex gap-3 overflow-x-auto pb-2">
-        @each(person in [{name:'Ana Beatriz',handle:'@anabia',initials:'AB'},{name:'Carlos Lima',handle:'@carlinhos.dev',initials:'CL'},{name:'Juliana Ferreira',handle:'@jufer',initials:'JF'}])
-          <a href="/perfil" class="flex min-w-56 items-center gap-3 rounded-xl border border-rural-800 p-3 hover:bg-rural-900"><span class="grid h-11 w-11 place-items-center rounded-full bg-brand font-bold text-white">{{ person.initials }}</span><span><span class="block text-sm font-bold">{{ person.name }}</span><span class="text-xs text-rural-400">{{ person.handle }}</span></span></a>
-        @end
+      <div class="mb-4 flex items-center justify-between">
+        <h2 class="text-sm font-bold uppercase tracking-wider text-rural-400">Vídeos · {{ videos.length }}</h2>
       </div>
+
+      @if(videos.length)
+        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+          @each(video in videos)
+            <a href="{{ route('videos.show', { id: video.id }) }}" class="group block min-w-0">
+              <div class="relative grid aspect-[9/16] place-items-center overflow-hidden rounded-xl bg-rural-800 text-white/70">
+                @if(video.thumbnailPath)
+                  <img src="{{ video.thumbnailPath }}" alt="" class="absolute inset-0 h-full w-full object-cover" />
+                @end
+                <span class="relative transition group-hover:scale-110">{{ svg('lucide:play', { width: 36, height: 36 }) }}</span>
+                <span class="absolute bottom-3 left-3 flex items-center gap-1 text-xs text-white">
+                  {{ svg('lucide:eye', { width: 15, height: 15 }) }} {{ video.viewsCount }}
+                </span>
+              </div>
+              <h3 class="mt-2 line-clamp-2 text-sm font-bold">{{ video.title }}</h3>
+              <p class="mt-1 truncate text-xs text-rural-400">{{ '@' + (video.author.username || 'usuário') }}</p>
+            </a>
+          @end
+        </div>
+      @else
+        <div class="rounded-xl border border-rural-800 bg-rural-950 px-6 py-12 text-center">
+          <h3 class="font-bold text-texto-forte">Nenhum vídeo encontrado</h3>
+          <p class="mt-2 text-sm text-rural-400">
+            {{ query ? 'Tente buscar por outro título ou usuário.' : 'Ainda não há vídeos publicados.' }}
+          </p>
+        </div>
+      @end
     </section>
-    <div class="mt-10">
-      <h2 class="text-sm font-bold uppercase tracking-wider text-rural-400">Vídeos</h2>
-      <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-        @each(card in [
-          { title: 'Colheita no campo experimental', author: '@carlinhos.dev', color: 'from-pink-600 to-rose-950' },
-          { title: 'Flexbox em 30 segundos', author: '@leti', color: 'from-sky-600 to-slate-950' },
-          { title: 'Trilha da mata atlântica', author: '@mari.costa', color: 'from-violet-700 to-slate-950' },
-          { title: 'O que é uma API REST?', author: '@jufer', color: 'from-amber-900 to-slate-950' },
-        ])
-          <a href="/videos/1" class="block">
-            <div class="grid aspect-[9/16] place-items-center rounded-xl bg-gradient-to-b {{ card.color }} text-white/60">{{ svg('lucide:play', { width: 36, height: 36 }) }}</div>
-            <h3 class="mt-2 line-clamp-2 text-sm font-bold">{{ card.title }}</h3>
-            <p class="mt-1 text-xs text-rural-400">{{ card.author }}</p>
-          </a>
-        @end
-      </div>
-    </div>
   </section>
 @end

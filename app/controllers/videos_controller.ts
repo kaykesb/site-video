@@ -43,6 +43,28 @@ export default class VideosController {
         return view.render('pages/videos/show', { video })
     }
 
+    async search({ request, view }: HttpContext) {
+        const query = request.input('q', '').trim().replace(/^@/, '')
+        const sort = request.input('sort') === 'views' ? 'views' : 'recent'
+        const videosQuery = Video.query()
+          .preload('author')
+          .orderBy(sort === 'views' ? 'views_count' : 'created_at', 'desc')
+
+        if (query) {
+          videosQuery.where((builder) => {
+            builder
+              .whereILike('title', `%${query}%`)
+              .orWhereHas('author', (authorQuery) => {
+                authorQuery.whereILike('username', `%${query}%`)
+              })
+          })
+        }
+
+        const videos = await videosQuery
+
+        return view.render('pages/search', { videos, query, sort })
+    }
+
     async index({ view }: HttpContext) {
         const videos = await Video.query()
           .preload('author')
