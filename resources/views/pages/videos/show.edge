@@ -1,25 +1,22 @@
 @layouts.app({ title: `${video.title} · RuralStream` })
-  <section class="relative flex min-h-[calc(100vh-4rem)] items-center justify-center bg-black px-4 py-8 text-white md:min-h-screen">
-    <a href="/dashboard" aria-label="Voltar" class="absolute left-5 top-5 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/50 hover:bg-black/75">{{ svg('lucide:arrow-left', { width: 20, height: 20 }) }}</a>
-    <div class="flex w-full max-w-6xl items-center justify-center gap-4">
-      <div class="relative flex h-[78vh] max-h-[850px] aspect-[9/16] items-center justify-center overflow-hidden rounded-xl bg-rural-900">
-        <video src="{{ video.videoPath }}" @if(video.thumbnailPath) poster="{{ video.thumbnailPath }}" @end controls class="h-full w-full object-contain"></video>
+  <section class="relative flex min-h-[calc(100vh-4rem)] items-center justify-center bg-rural-900 px-4 py-8 text-rural-100 md:min-h-screen">
+    <a href="/dashboard" aria-label="Voltar" class="absolute left-5 top-5 z-10 grid h-10 w-10 place-items-center rounded-full bg-black/50 text-white hover:bg-black/75">{{ svg('lucide:arrow-left', { width: 20, height: 20 }) }}</a>
+    <div class="flex w-full max-w-6xl items-center justify-center">
+      <div class="relative flex h-[90vh] max-h-[1000px] aspect-[9/16] items-center justify-center overflow-hidden rounded-xl border border-rural-800 bg-white shadow-sm">
+        <video
+          src="{{ video.videoPath }}"
+          @if(video.thumbnailPath)
+            poster="{{ video.thumbnailPath }}"
+          @end
+          controls
+          class="h-full w-full object-contain"
+        ></video>
       </div>
-      <div class="flex flex-col gap-5 text-rural-300">
-        <button type="button" aria-label="Curtir" class="grid justify-items-center gap-1"><span class="grid h-11 w-11 place-items-center rounded-full bg-rural-900">{{ svg('lucide:heart', { width: 22, height: 22 }) }}</span><span class="text-xs">Curtir</span></button>
-        <a href="#comments" aria-label="Comentários" class="grid justify-items-center gap-1"><span class="grid h-11 w-11 place-items-center rounded-full bg-rural-900">{{ svg('lucide:message-circle', { width: 22, height: 22 }) }}</span><span class="text-xs">Comentários</span></a>
-        <button type="button" aria-label="Compartilhar" class="grid justify-items-center gap-1"><span class="grid h-11 w-11 place-items-center rounded-full bg-rural-900">{{ svg('lucide:share-2', { width: 22, height: 22 }) }}</span><span class="text-xs">Compartilhar</span></button>
-      </div>
-      <aside id="comments" class="hidden w-80 self-stretch flex-col rounded-xl bg-rural-900 text-rural-100 xl:flex">
-        <header class="border-b border-rural-800 p-4 font-bold">Comentários</header>
-        <div class="flex-1 p-4 text-sm text-rural-400">Ainda não há comentários.</div>
-        <form class="flex gap-2 border-t border-rural-800 p-3"><input placeholder="Adicionar comentário..." class="min-w-0 flex-1 rounded-full bg-rural-800 px-3 text-sm placeholder:text-rural-500" /><button type="button" aria-label="Enviar comentário" class="grid h-9 w-9 place-items-center rounded-full bg-brand text-white">{{ svg('lucide:send', { width: 16, height: 16 }) }}</button></form>
-      </aside>
     </div>
-    <div class="absolute bottom-6 left-6 max-w-xl text-white md:left-10">
-      <p class="text-sm text-white/75">{{ '@' + video.author.username }} · {{ video.viewsCount }} visualizações</p>
+    <div class="absolute bottom-6 left-6 max-w-xl text-rural-100 md:left-10">
+      <p class="text-sm text-rural-400">{{ '@' + video.author.username }} · {{ video.viewsCount }} visualizações</p>
       <h1 class="mt-1 text-xl font-bold">{{ video.title }}</h1>
-      <p class="mt-2 text-sm text-white/80">{{ video.description || 'Sem descrição' }}</p>
+      <p class="mt-2 text-sm text-rural-300">{{ video.description || 'Sem descrição' }}</p>
     </div>
   </section>
 @end

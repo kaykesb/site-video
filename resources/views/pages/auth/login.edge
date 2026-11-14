@@ -1,4 +1,4 @@
-@layouts.auth({ centered: true })
+@layouts.auth({ centered: true, softBackground: true })
   <div class="mb-8 lg:hidden">
     @!logo()
   </div>
@@ -8,7 +8,7 @@
   @form({ route: 'session.store', method: 'POST', class: 'mt-8 flex flex-col gap-4', 'x-data': '{ submitting: false }', 'x-on:submit': 'submitting = true' })
     @field.root({ name: 'email' })
       @!field.label({ text: 'E-mail' })
-      @!input.control({ type: 'email', autocomplete: 'username', placeholder: 'voce@exemplo.com' })
+      @!input.control({ type: 'email', autocomplete: 'username', placeholder: 'seu@email.com' })
       @!field.error()
     @end
     @field.root({ name: 'password' })

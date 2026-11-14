@@ -11,7 +11,7 @@ export default class VideosController {
         return view.render('pages/videos/create')
     }
 
-    async store({ request, response, auth }: HttpContext) {
+    async store({ request, response, auth, session }: HttpContext) {
         const { title, description, video, thumbnail, duration } = await request.validateUsing(createVideoValidator)
         const videoFileName = `${randomUUID()}.${video.extname}`
         await video.move(app.makePath('public/uploads/videos'), { name: videoFileName })
@@ -30,6 +30,8 @@ export default class VideosController {
             videoPath: `/uploads/videos/${videoFileName}`,
             thumbnailPath: thumbnailFileName ? `/uploads/thumbnails/${thumbnailFileName}` : null,
         })
+
+        session.flash('success', 'Vídeo publicado com sucesso!')
 
         return response.redirect().toRoute('dashboard')
     }

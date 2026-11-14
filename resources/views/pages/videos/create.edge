@@ -4,7 +4,7 @@
     <h1 class="mt-1 text-3xl font-bold tracking-tight text-texto-forte">Enviar vídeo</h1>
     <p class="mt-2 text-sm text-rural-400">Publique um vídeo curto para outras pessoas assistirem.</p>
 
-    @form({ action: '/videos', method: 'POST', enctype: 'multipart/form-data', class: 'mt-8 grid gap-8 md:grid-cols-[280px_minmax(0,1fr)]' })
+    @form({ action: '/videos', method: 'POST', enctype: 'multipart/form-data', class: 'mt-8 grid gap-8 md:grid-cols-[280px_minmax(0,1fr)]', 'x-data': '{ submitting: false }', 'x-on:submit': 'submitting = true' })
       <section>
         @field.root({ name: 'video' })
         <div x-data="{ videoUrl: null, duration: null }">
@@ -16,6 +16,9 @@
         <input type="hidden" name="duration" x-bind:value="duration" />
         </div>
         @!field.error()
+        @end
+        @field.root({ name: 'duration' })
+          @!field.error()
         @end
       </section>
       <section class="flex flex-col gap-5">
@@ -34,8 +37,7 @@
           @!input.control({ type: 'file', accept: 'image/jpeg,image/png,image/webp' })
           @!field.error()
         @end
-        <div class="rounded-xl border border-rural-800 p-4 text-sm text-rural-400"><p class="font-bold text-rural-200">Dica</p><p class="mt-1">Use um título claro e uma boa imagem de capa para apresentar seu vídeo.</p></div>
-        <button type="submit" class="mt-2 h-11 rounded-lg bg-brand px-6 text-sm font-bold text-white hover:bg-brand-hover">Publicar vídeo</button>
+        <button type="submit" x-bind:disabled="submitting" x-text="submitting ? 'Publicando...' : 'Publicar vídeo'" class="mt-2 h-11 rounded-lg bg-brand px-6 text-sm font-bold text-white hover:bg-brand-hover">Publicar vídeo</button>
       </section>
     @end
   </section>
